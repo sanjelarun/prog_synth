@@ -1,0 +1,15 @@
+// Preview
+digraph {
+	node [color=lightblue2 style=filled]
+	0 [label="nums = [1, 2, 3, 4, 5]"]
+	1 [label="total = 0"]
+	0 -> 1 [constraints=false]
+	2 [label="for i in nums:"]
+	1 -> 2 [constraints=false]
+	3 [label="total += i"]
+	3 -> 1 [arrowsize=1 color=red constraints=false]
+	2 -> 3 [constraints=false]
+	4 [label="print(total)"]
+	2 -> 4 [constraints=false]
+	3 -> 2 [constraints=false]
+}
