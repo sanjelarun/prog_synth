@@ -1,0 +1,7 @@
+reduce, .reduce("##\n##")
+count, .count()
+max, .max()
+min, .min()
+sum, .sum()
+reduceByKey, .reduceByKey("##\n##")
+countByKey. .countByKey("##\n##")

@@ -6,8 +6,8 @@ from node import Node
 COLORS = ['red', 'green']
 class Graph:
     def __init__(self) -> None:
-        self.root = None
-        self.nodes = []
+        self.root: Node = None
+        self.nodes: list[Node] = []
         self.node_counter = 0
         self.edges = []
         self.variables = {}
