@@ -1,4 +1,5 @@
 map, .map("##\n##")
 filter, .filter("##\n##")
 union, .union("##\n##")
-flatmap, flatmap("##\n##")
+flatmap, .flatmap("##\n##")
+groupByKey, .groupByKey("##\n##")
