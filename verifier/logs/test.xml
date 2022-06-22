@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="3" time="0.063" timestamp="2022-06-22T11:06:30.678377" hostname="sanjelarun-VirtualBox"><testcase classname="verifier.test_sample" name="test_function" time="0.002"><failure message="assert 3 == 4&#10; +  where 3 = f()">def test_function():
+&gt;       assert f() == 4
+E       assert 3 == 4
+E        +  where 3 = f()
+
+verifier/test_sample.py:9: AssertionError</failure></testcase><testcase classname="verifier.test_sample" name="test_function_2" time="0.001" /><testcase classname="verifier.test_sample" name="test_function_3" time="0.001"><failure message="AssertionError: assert 3 == 'asdasd'&#10; +  where 3 = f()">def test_function_3():
+&gt;       assert f() == "asdasd"
+E       AssertionError: assert 3 == 'asdasd'
+E        +  where 3 = f()
+
+verifier/test_sample.py:16: AssertionError</failure></testcase></testsuite></testsuites>
