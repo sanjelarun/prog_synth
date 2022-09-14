@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 
 
 LOG_PATH = "verifier/logs/test.xml"
-TEST_PATH = "verifier/test_sample.py"
+TEST_PATH = "/home/sanjelarun/prog_synth/prog_synth/verifier/sum-numbers.py"
 
 def parseTestXML(xmlFile=LOG_PATH):
     tree = ET.parse(xmlFile)
@@ -28,4 +28,5 @@ def invoke_pytest(filepath=TEST_PATH):
 
 verifier_output = invoke_pytest()
 
+print(verifier_output)
 
