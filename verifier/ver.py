@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 
 
 LOG_PATH = "verifier/logs/test.xml"
-TEST_PATH = "/home/sanjelarun/prog_synth/prog_synth/verifier/sum-numbers.py"
+TEST_PATH = "/home/sanjelarun/prog_synth/prog_synth/test-gen/code_with_test.py"
 
 def parseTestXML(xmlFile=LOG_PATH):
     tree = ET.parse(xmlFile)

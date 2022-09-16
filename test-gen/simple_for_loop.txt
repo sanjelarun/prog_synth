@@ -1,0 +1,3 @@
+for i in dataset:
+    if i % 2 == 0:
+        total = i * 2 + total

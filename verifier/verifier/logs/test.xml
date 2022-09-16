@@ -1,8 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="2" time="0.083" timestamp="2022-09-14T12:07:56.608240" hostname="sanjelarun-VirtualBox"><testcase classname="sum-numbers" name="test_case_0" time="0.001"><failure message="assert -8397 == -8391">def test_case_0():
-        int_0 = -2799
-        list_0 = [int_0, int_0, int_0]
-        int_1 = sum_num(list_0)
-&gt;       assert int_1 == -8391
-E       assert -8397 == -8391
-
-sum-numbers.py:14: AssertionError</failure></testcase><testcase classname="sum-numbers" name="test_case_1" time="0.001" /></testsuite></testsuites>
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="2" time="0.043" timestamp="2022-09-15T13:12:06.701982" hostname="sanjelarun-VirtualBox"><testcase classname="test-gen.code_with_test" name="test_case_0" time="0.001" /><testcase classname="test-gen.code_with_test" name="test_case_1" time="0.001" /></testsuite></testsuites>

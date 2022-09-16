@@ -1,11 +1,13 @@
 import os
-import subprocess
-import re
+import astor
 
-VIRTUAL_ENV_PATH = "env-test/bin"
+WORKING_DIR = "/home/sanjelarun/prog_synth/prog_synth/test-gen"
+TEST_GEN_DIRECTORY = "test-gen/generate_tests"
+MODULE_NAME = "temp-gen"
+
 def convert_code_fragments_to_file(dataset_name: str, code_fragment: str, scope_variables: []):
     variables = ""
-    imports =  "from typing import List"
+    imports = "from typing import List"
     for each_variable in scope_variables:
         variables += str(each_variable) + " = 0 \n"
 
@@ -19,37 +21,60 @@ def convert_code_fragments_to_file(dataset_name: str, code_fragment: str, scope_
     data = data.replace("##IMPORTS", imports)
 
     # REPLACE THE DATASET
-    data  = data.replace("##DATASET", dataset_name + ": List[int]")
+    data = data.replace("##DATASET", dataset_name + ": List[int]")
 
     # REPLACE THE SCOPE VARIABLES
     data = data.replace("##VARIABLES", variables)
 
     # REPLACE THE RETURN VARIABLE
     # TODO -> MAKE RETURN DYNAMIC
-    data = data.replace("##RETURN", "return " +str(variables[0]))
+    data = data.replace("##RETURN", "return " + str(variables[0]))
 
     # REPLACE THE FUNCTION BODY
-    code_fragment = code_fragment.replace("\t", '    ')
-    data = data.format(code_fragment)
-    #data = data.replace("##FUN_BODY", code_fragment)
-    # data = [x if str(x) != "    ##FUN_BODY" else  code_fragment for x in data.split("\n")]
-    # data = "\n".join(data)
-    #data = data.replace('\t', "    ")
-    #data = data.replace("{}", code_fragment)
-    # print("\n".join(d))
+    #print(code_fragment)
+    code_fragment = code_fragment.replace("\t", "\t\t")
 
+    print(code_fragment)
+    data = data.replace("##FUN_BODY",  code_fragment)
     # CREATE OUTPUT FILE 1
     gen_file = open("temp-gen.py", "wt")
     gen_file.write(data)
     gen_file.close()
 
-def generate_test_cases(input_filePath,output_filepath):
-    # Activate Virtual Environment
-    subprocess.Popen(VIRTUAL_ENV_PATH, 'activate_this.py')
-    print("here")
 
-fragment = "for i in nums:\n\t\ts+=i"
-vars = ["s"]
-dataset_name = "nums"
-#convert_code_fragments_to_file(dataset_name=dataset_name, code_fragment=fragment, scope_variables=vars)
-generate_test_cases("A","B")
+def generate_test_cases():
+    # SETTING PYNGUIN ENVIRONMENT VARIABLE
+    os.environ["PYNGUIN_DANGER_AWARE"] = ""
+
+    # GENERATING TEST CASES USING PYNGUIN
+    cmd = "pynguin --project-path " + WORKING_DIR + " --output-path " + TEST_GEN_DIRECTORY + " --module-name temp-gen -v"
+    stream = os.popen(cmd)
+    print(stream.read())
+
+
+def extract_only_test(generate_file_path="test-gen/generate_tests/test_temp-gen.py"):
+
+    with open('/home/sanjelarun/prog_synth/prog_synth/test-gen/temp-gen.py') as gen_in:
+        allLines = gen_in.read()
+
+    with open('/home/sanjelarun/prog_synth/prog_synth/test-gen/test-gen/generate_tests/test_temp-gen.py') as fin:
+        data = fin.read()
+        data = data.replace("import temp-gen as module_0", allLines)
+        data = data.replace("module_0.", " ")
+
+    with open("code_with_test.py", 'w') as outputFile:
+        outputFile.write(data)
+
+
+
+
+with open('simple_for_loop.txt') as input_code:
+    fragment = input_code.read()
+print(fragment)
+vars = ["total"]
+dataset_name = "dataset"
+
+convert_code_fragments_to_file(dataset_name, fragment, vars)
+generate_test_cases()
+
+

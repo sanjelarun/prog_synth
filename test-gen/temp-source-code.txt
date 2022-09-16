@@ -1,7 +1,6 @@
 ##IMPORTS
 
-
 def func_0 (##DATASET):
     ##VARIABLES
-    {}
+    ##FUN_BODY
     ##RETURN
