@@ -1,9 +1,12 @@
 import os
-import astor
-
-WORKING_DIR = "/home/sanjelarun/prog_synth/prog_synth/test-gen"
+import pandas as pd
+WORKING_DIR = "/test-generator"
 TEST_GEN_DIRECTORY = "test-gen/generate_tests"
 MODULE_NAME = "temp-gen"
+
+
+def insert_dash(string, index, new_string):
+    return string[:index] + new_string + string[index:]
 
 def convert_code_fragments_to_file(dataset_name: str, code_fragment: str, scope_variables: []):
     variables = ""
@@ -25,21 +28,30 @@ def convert_code_fragments_to_file(dataset_name: str, code_fragment: str, scope_
 
     # REPLACE THE SCOPE VARIABLES
     data = data.replace("##VARIABLES", variables)
+    code_fragment = code_fragment.replace('    ', '\t\t')
+    print(repr(code_fragment))
+    # index_of_fun = data.index("##FUN_BODY")
+    # for each_line in code_fragment.split('\n'):
+    #     print(insert_dash(data, index_of_fun, each_line))
 
+    data = data.replace("##FUN_BODY", code_fragment)
     # REPLACE THE RETURN VARIABLE
     # TODO -> MAKE RETURN DYNAMIC
-    data = data.replace("##RETURN", "return " + str(variables[0]))
+    data = data.replace("##RETURN", "return " + str(scope_variables[0]))
 
     # REPLACE THE FUNCTION BODY
     #print(code_fragment)
-    code_fragment = code_fragment.replace("\t", "\t\t")
 
-    print(code_fragment)
-    data = data.replace("##FUN_BODY",  code_fragment)
+
     # CREATE OUTPUT FILE 1
     gen_file = open("temp-gen.py", "wt")
     gen_file.write(data)
     gen_file.close()
+
+    # Auto Indentation the Python file
+    cmd = "autopep8 /home/sanjelarun/prog_synth/prog_synth/test-gen/temp-gen.py --in-place --pep8-passes 2000 --verbose"
+    stream = os.popen(cmd)
+    print(stream.read())
 
 
 def generate_test_cases():
@@ -49,15 +61,15 @@ def generate_test_cases():
     # GENERATING TEST CASES USING PYNGUIN
     cmd = "pynguin --project-path " + WORKING_DIR + " --output-path " + TEST_GEN_DIRECTORY + " --module-name temp-gen -v"
     stream = os.popen(cmd)
-    print(stream.read())
+    print()
 
 
 def extract_only_test(generate_file_path="test-gen/generate_tests/test_temp-gen.py"):
 
-    with open('/home/sanjelarun/prog_synth/prog_synth/test-gen/temp-gen.py') as gen_in:
+    with open('/test-generator/temp-gen.py') as gen_in:
         allLines = gen_in.read()
 
-    with open('/home/sanjelarun/prog_synth/prog_synth/test-gen/test-gen/generate_tests/test_temp-gen.py') as fin:
+    with open('/test-generator/test-gen/generate_tests/test_temp-gen.py') as fin:
         data = fin.read()
         data = data.replace("import temp-gen as module_0", allLines)
         data = data.replace("module_0.", " ")
@@ -68,13 +80,12 @@ def extract_only_test(generate_file_path="test-gen/generate_tests/test_temp-gen.
 
 
 
-with open('simple_for_loop.txt') as input_code:
-    fragment = input_code.read()
-print(fragment)
-vars = ["total"]
-dataset_name = "dataset"
 
-convert_code_fragments_to_file(dataset_name, fragment, vars)
+df = pd.read_csv('/home/sanjelarun/prog_synth/prog_synth/models/train.csv', sep="#")
+print(df.head())
+
+a = df.loc[0]
+code = a[0].replace('\\n','\n').replace('\\t','\t')
+convert_code_fragments_to_file(a[2],code, [a[3]])
 generate_test_cases()
-
-
+extract_only_test()

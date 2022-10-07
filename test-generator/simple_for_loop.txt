@@ -1,3 +1,5 @@
 for i in dataset:
     if i % 2 == 0:
         total = i * 2 + total
+    if total % 3 == 0:
+        total / 2
