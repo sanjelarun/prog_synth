@@ -1,10 +1,10 @@
 code_fragments#operation#dataset#vars
-for i in range(n):\n\t count += 1#count += 1#n#count
-for i in range(n):\n\t sum += i#sum += i#n#sum
-for i in range(n):\n\t prod *= i#prod *= i#n#prod
-for i in range(n):\n\t count = count + 1#count = count +  1#n#count
-for i in range(n):\n\t sum = sum + i#sum = sum + i#n#sum
-for i in range(n):\n\t prod = prod *  i#prod = prod *  i#n#sum
+for i in n:\n\t count += 1#count += 1#n#count
+for i in n:\n\t sum += i#sum += i#n#sum
+for i in n:\n\t prod *= i#prod *= i#n#prod
+for i in n:\n\t count = count + 1#count = count +  1#n#count
+for i in n:\n\t sum = sum + i#sum = sum + i#n#sum
+for i in n:\n\t prod = prod *  i#prod = prod *  i#n#sum
 for idx, n in enumerate(num):\n\t num[idx] = num[idx] + 1#num[idx] = num[idx] + 1#num#num
 for idx, n in enumerate(num):\n\t num[idx] = num[idx] * 2#num[idx] = num[idx] * 2#num#num
 for idx, n in enumerate(num):\n\t num[idx] = num[idx] + 3#num[idx] = num[idx] + 3#num#num
